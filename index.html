@@ -5,19 +5,131 @@
   <title>Factory Production Tree</title>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="https://unpkg.com/dagre-d3@0.6.4/dist/dagre-d3.min.js"></script>
+
+
+
   <style>
-    body { font-family: sans-serif; margin:0; padding:0; background:#f0f0f0; }
-    #controls { background:#fff; padding:10px; border-bottom:1px solid #ccc; }
-    svg { width:100vw; height:calc(100vh - 60px); }
-    .node rect { fill:white; stroke:#333; stroke-width:1.5px; rx:6; ry:6; }
-    .edgePath path { stroke:#666; stroke-width:1.5px; fill:none; marker-end:url(#arrowhead); }
-    #credit { position:fixed; top:10px; right:10px; font-size:14px; background:#fff; padding:5px 10px; border-radius:4px; box-shadow:0 0 6px rgba(0,0,0,0.1); z-index:1000; }
-    #credit a { color:#007acc; text-decoration:none; }
-    #credit a:hover { text-decoration:underline; }
-    #cps-table { position:fixed; bottom:10px; left:10px; background:white; padding:10px; border-radius:5px; font-size:14px; box-shadow:0 0 10px rgba(0,0,0,0.1); z-index:1000; }
-    #cps-table table { border-collapse:collapse; }
-    #cps-table th, #cps-table td { padding:4px 8px; border:1px solid #ddd; }
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: black;
+  color: white;
+}
+
+#controls {
+  background: #111;
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  color: white;
+}
+
+svg {
+  width: 100vw;
+  height: calc(100vh - 60px);
+  background-color: #000;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+
+
+/* Node (Box) Styling */
+.node rect {
+  fill: #000;
+  stroke: white;
+  stroke-width: 1.5px;
+  rx: 6;
+  ry: 6;
+}
+
+/* Node Text */
+.node text {
+  fill: white;
+}
+
+/* Arrow Styling */
+.edgePath path {
+  stroke: white;
+  stroke-width: 1.5px;
+  fill: none;
+  marker-end: url(#arrowhead);
+}
+
+/* Arrowhead */
+marker#arrowhead path {
+  fill: white;
+}
+
+/* CPS Table */
+
+#cps-table {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background: black;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  border: 1px solid white;
+  z-index: 1000;
+}
+
+
+#credit {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  background: #111;
+  padding: 5px 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(255,255,255,0.1);
+  z-index: 1000;
+}
+
+#credit a {
+  color: #66ccff;
+  text-decoration: none;
+}
+#credit a:hover {
+  text-decoration: underline;
+}
+
+
+#legend-box {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: black;
+  color: white;
+  padding: 10px 14px;
+  border: 1px solid white;
+  border-radius: 6px;
+  font-size: 13px;
+  width: 240px;
+  line-height: 1.4;
+  z-index: 1000;
+}
+
+#legend-box ol {
+  padding-left: 18px;
+  margin: 8px 0 0 0;
+}
+
+#legend-box li {
+  margin-bottom: 6px;
+}
+
+
+
   </style>
+
+
+
 </head>
 <body>
 
@@ -35,13 +147,37 @@
     <option value="5">5</option>
   </select>
   <label><input type="checkbox" id="combineCb" /> Combine duplicates</label>
-  <button onclick="renderGraph()">Generate</button>
 </div>
 
-<div style="position: absolute; bottom: 10px; left: 10px; background: #f8f9fa; padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); font-family: sans-serif; font-size: 14px;">
-  <div style="font-weight: bold; text-align: center; margin-bottom: 4px;">Cash per Second (CPS)</div>
-  <div id="cpsValue" style="text-align: center; font-size: 18px; color: #2c3e50;">0.00</div>
+
+<div id="legend-box">
+  <strong>Legend</strong><br>
+  <ol>
+    <li><strong>Item Name</strong>: What is being produced</li>
+    <li><strong>Machine</strong>: Required to produce the item</li>
+    <li><strong>Output (/s)</strong>: How many per second are produced</li>
+    <li><strong>Machines</strong>: Total machines needed at selected level</li>
+    <li><strong>Conveyors</strong>: Needed to carry output (1.00x = full belt)</li>
+  </ol>
 </div>
+
+
+
+<div id="cps-table">
+  <table>
+    <thead>
+      <tr>
+        <th style="background: black; color: white; border: 1px solid white; font-size: 18px;">CPS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="cpsValue" style="background: black; color: white; border: 1px solid white; font-size: 22px;">-</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 
 </div>
@@ -52,7 +188,8 @@
 </div>
 
 <svg id="svg-canvas"></svg>
-// ------------------------------------------------------------------------------------------------------------------------------------RECPIPIEASDIAEJF BABABABAB
+
+
 <script>
 const recipes = {
   "Iron Ore": {time:4, machine:"Miner", price:4},
@@ -145,7 +282,6 @@ function updateCpsTable(price, rate) {
 }
 
 
-// RENDER------------------------------------------------------
 
 
 function renderGraph() {
@@ -266,28 +402,20 @@ window.onload = () => {
   Object.keys(recipes).forEach(i => sel.add(new Option(i,i)));
   renderGraph();
 
-  document.getElementById("lvlSelect").addEventListener("change", () => {
+  const update = () => {
     const target = document.getElementById("targetSelect").value;
     const rate = parseFloat(document.getElementById("rateInput").value);
     const itemPrice = recipes[target]?.price ?? 0;
     updateCpsTable(itemPrice, rate);
-  });
-
-  document.getElementById("rateInput").addEventListener("input", () => {
-    const target = document.getElementById("targetSelect").value;
-    const rate = parseFloat(document.getElementById("rateInput").value);
-    const itemPrice = recipes[target]?.price ?? 0;
-    updateCpsTable(itemPrice, rate);
-  });
-
-  document.getElementById("targetSelect").addEventListener("change", () => {
     renderGraph();
-  });
+  };
 
-  document.getElementById("combineCb").addEventListener("change", () => {
-    renderGraph();
-  });
+  document.getElementById("lvlSelect").addEventListener("change", update);
+  document.getElementById("rateInput").addEventListener("input", update);
+  document.getElementById("targetSelect").addEventListener("change", update);
+  document.getElementById("combineCb").addEventListener("change", update);
 };
+
 
 
 
