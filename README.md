@@ -1,4 +1,4 @@
-https://callumrenner.github.io/BuildYourFactoryTycoon/
+LINK TO CALCULATOR: https://callumrenner.github.io/BuildYourFactoryTycoon/
 
 Should be simple to use
 1. Set Target item
