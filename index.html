@@ -192,105 +192,128 @@ marker#arrowhead path {
 
 <script>
 const recipes = {
-  "Iron Ore": {time: 4, machine: "Miner", price: 4},
-  "Copper Ore": {time: 6, machine: "Miner", price: 6},
-  "Aluminum Ore": {time: 8, machine: "Miner", price: 8},
-  "Gold Ore": {time: 15, machine: "Miner", price: 15},
-  "Coal Ore": {time: 4, machine: "Miner", price: 4},
-  "Sand": {time: 2, machine: "Miner", price: 2},
+  // Miner
+  "Iron Ore": {time: 5, machine: "Miner", price: 5},
+  "Copper Ore": {time: 5, machine: "Miner", price: 5},
+  "Aluminum Ore": {time: 5, machine: "Miner", price: 5},
+  "Gold Ore": {time: 5, machine: "Miner", price: 5},
+  "Coal Ore": {time: 5, machine: "Miner", price: 5},
+  "Sand": {time: 5, machine: "Miner", price: 5},
+
+  // Oil Rig
   "Crude Oil": {time: 5, machine: "Oil Rig", price: 5},
 
-  "Plastic": {time: 5, machine: "Oil Refinery", price: 10, inputs: {"Crude Oil": 1}},
-  "Rubber": {time: 5, machine: "Oil Refinery", price: 10, inputs: {"Crude Oil": 1}},
+  // Smelter
+  "Iron Ingot": {time: 5, machine: "Smelter", price: 10, inputs: {"Iron Ore": 1}},
+  "Copper Ingot": {time: 5, machine: "Smelter", price: 10, inputs: {"Copper Ore": 1}},
+  "Aluminum Ingot": {time: 5, machine: "Smelter", price: 10, inputs: {"Aluminum Ore": 1}},
+  "Gold Ingot": {time: 5, machine: "Smelter", price: 10, inputs: {"Gold Ore": 1}},
+  "Glass": {time: 5, machine: "Smelter", price: 10, inputs: {"Sand": 1}},
 
-  "Iron Ingot": {time: 4, machine: "Smelter", price: 8, inputs: {"Iron Ore": 1}},
-  "Copper Ingot": {time: 6, machine: "Smelter", price: 12, inputs: {"Copper Ore": 1}},
-  "Aluminum Ingot": {time: 8, machine: "Smelter", price: 16, inputs: {"Aluminum Ore": 1}},
-  "Gold Ingot": {time: 15, machine: "Smelter", price: 30, inputs: {"Gold Ore": 1}},
-  "Glass": {time: 2, machine: "Smelter", price: 4, inputs: {"Sand": 1}},
+  // Blast Furnace
+  "Steel Ingot": {time: 7.5, machine: "Blast Furnace", price: 30, inputs: {"Coal Ore": 1, "Iron Ore": 1}},
+  "Cast Iron Ingot": {time: 7.5, machine: "Blast Furnace", price: 45, inputs: {"Coal Ore": 1, "Iron Ingot": 1}},
 
-  "Steel Ingot": {time: 6, machine: "Blast Furnace", price: 16, inputs: {"Coal Ore": 1, "Iron Ore": 1}},
-  "Cast Iron Ingot": {time: 9, machine: "Blast Furnace", price: 24, inputs: {"Coal Ore": 1, "Iron Ingot": 1}},
+  // Oil Refinery
+  "Plastic": {time: 5, machine: "Oil Refinery", price: 15, inputs: {"Crude Oil": 1}},
+  "Rubber": {time: 5, machine: "Oil Refinery", price: 15, inputs: {"Crude Oil": 1}},
 
-  "Aluminum Casing S": {time: 3, machine: "Shaper", price: 32, inputs: {"Aluminum Ingot": 1}},
-  "Aluminum Casing M": {time: 6, machine: "Shaper", price: 64, inputs: {"Aluminum Ingot": 2}},
-  "Aluminum Casing L": {time: 9, machine: "Shaper", price: 96, inputs: {"Aluminum Ingot": 3}},
-  "Plastic Casing S": {time: 1.5, machine: "Shaper", price: 14, inputs: {"Plastic": 1}},
-  "Plastic Casing M": {time: 3, machine: "Shaper", price: 28, inputs: {"Plastic": 2}},
-  "Plastic Casing L": {time: 4, machine: "Shaper", price: 42, inputs: {"Plastic": 3}},
-  "Steel Casing S": {time: 3, machine: "Shaper", price: 32, inputs: {"Steel Ingot": 1}},
-  "Steel Casing M": {time: 6, machine: "Shaper", price: 64, inputs: {"Steel Ingot": 2}},
-  "Steel Casing L": {time: 9, machine: "Shaper", price: 96, inputs: {"Steel Ingot": 3}},
-  "Aluminum Frame": {time: 6, machine: "Shaper", price: 64, inputs: {"Aluminum Ingot": 2}},
-  "Steel Frame": {time: 6, machine: "Shaper", price: 64, inputs: {"Steel Ingot": 2}},
-  "Blade": {time: 3, machine: "Shaper", price: 32, inputs: {"Steel Ingot": 1}},
-  "Steel Chain": {time: 3, machine: "Shaper", price: 32, inputs: {"Steel Ingot": 1}},
+  // Shaper
+  "Aluminum Casing S": {time: 7.5, machine: "Shaper", price: 25, inputs: {"Aluminum Ingot": 1}},
+  "Aluminum Casing M": {time: 7.5, machine: "Shaper", price: 50, inputs: {"Aluminum Ingot": 2}},
+  "Aluminum Casing L": {time: 7.5, machine: "Shaper", price: 75, inputs: {"Aluminum Ingot": 3}},
+  "Plastic Casing S": {time: 7.5, machine: "Shaper", price: 38, inputs: {"Plastic": 1}},
+  "Plastic Casing M": {time: 7.5, machine: "Shaper", price: 75, inputs: {"Plastic": 2}},
+  "Plastic Casing L": {time: 7.5, machine: "Shaper", price: 113, inputs: {"Plastic": 3}},
+  "Steel Casing S": {time: 7.5, machine: "Shaper", price: 75, inputs: {"Steel Ingot": 1}},
+  "Steel Casing M": {time: 7.5, machine: "Shaper", price: 150, inputs: {"Steel Ingot": 2}},
+  "Steel Casing L": {time: 7.5, machine: "Shaper", price: 225, inputs: {"Steel Ingot": 3}},
+  "Aluminum Frame": {time: 7.5, machine: "Shaper", price: 50, inputs: {"Aluminum Ingot": 2}},
+  "Steel Frame": {time: 7.5, machine: "Shaper", price: 150, inputs: {"Steel Ingot": 2}},
+  "Blade": {time: 7.5, machine: "Shaper", price: 75, inputs: {"Steel Ingot": 1}},
+  "Steel Chain": {time: 7.5, machine: "Shaper", price: 75, inputs: {"Steel Ingot": 1}},
 
-  "Battery": {time: 4, machine: "Constructor 1", price: 80, inputs: {"Iron Ingot": 2, "Copper Ingot": 2}},
-  "Circuit board": {time: 4, machine: "Constructor 1", price: 80, inputs: {"Copper Ingot": 3, "Glass": 1}},
-  "Screen": {time: 2.5, machine: "Constructor 1", price: 48, inputs: {"Glass": 3, "Copper Ingot": 1}},
-  "Wiring": {time: 2, machine: "Constructor 1", price: 44, inputs: {"Copper Ingot": 1, "Plastic": 1}},
-  "Heating Element": {time: 2, machine: "Constructor 1", price: 40, inputs: {"Iron Ingot": 1, "Copper Ingot": 1}},
-  "Cooling Element": {time: 2, machine: "Constructor 1", price: 40, inputs: {"Iron Ingot": 1, "Copper Ingot": 1}},
-  "Hand Tools": {time: 3.5, machine: "Constructor 1", price: 72, inputs: {"Steel Ingot": 1, "Plastic": 2}},
-  "Wheel S": {time: 2.5, machine: "Constructor 1", price: 52, inputs: {"Steel Ingot": 1, "Rubber": 1}},
-  "Wheel M": {time: 4, machine: "Constructor 1", price: 84, inputs: {"Steel Ingot": 2, "Rubber": 1}},
-  "Wheel L": {time: 5, machine: "Constructor 1", price: 104, inputs: {"Steel Ingot": 2, "Rubber": 2}},
-  "Piston": {time: 3, machine: "Constructor 1", price: 80, inputs: {"Aluminum Ingot": 1, "Cast Iron Ingot": 1}},
-  "V2 Engine Block": {time: 3, machine: "Constructor 1", price: 64, inputs: {"Steel Ingot": 1, "Aluminum Ingot": 1}},
-  "V6 Engine Block": {time: 5.5, machine: "Constructor 1", price: 112, inputs: {"Steel Ingot": 2, "Cast Iron Ingot": 1}},
-  "V8 Engine Block": {time: 8, machine: "Constructor 1", price: 160, inputs: {"Steel Ingot": 2, "Cast Iron Ingot": 2}},
-  "Vehicle Body": {time: 6.5, machine: "Constructor 1", price: 128, inputs: {"Steel Ingot": 2, "Aluminum Ingot": 2}},
-  "Battery Pack": {time: 8, machine: "Constructor 1", price: 568, inputs: {"Battery": 3, "Wiring": 1}},
+  // Constructor 1
+  "Battery": {time: 10, machine: "Constructor 1", price: 100, inputs: {"Iron Ingot": 2, "Copper Ingot": 2}},
+  "Circuit board": {time: 10, machine: "Constructor 1", price: 100, inputs: {"Copper Ingot": 3, "Glass": 1}},
+  "Screen": {time: 10, machine: "Constructor 1", price: 100, inputs: {"Glass": 3, "Copper Ingot": 1}},
+  "Wiring": {time: 10, machine: "Constructor 1", price: 63, inputs: {"Copper Ingot": 1, "Plastic": 1}},
+  "Heating Element": {time: 10, machine: "Constructor 1", price: 50, inputs: {"Iron Ingot": 1, "Copper Ingot": 1}},
+  "Cooling Element": {time: 10, machine: "Constructor 1", price: 50, inputs: {"Iron Ingot": 1, "Copper Ingot": 1}},
+  "Hand Tools": {time: 10, machine: "Constructor 1", price: 150, inputs: {"Steel Ingot": 1, "Plastic": 2}},
+  "Wheel S": {time: 10, machine: "Constructor 1", price: 113, inputs: {"Steel Ingot": 1, "Rubber": 1}},
+  "Wheel M": {time: 10, machine: "Constructor 1", price: 188, inputs: {"Steel Ingot": 2, "Rubber": 1}},
+  "Wheel L": {time: 10, machine: "Constructor 1", price: 225, inputs: {"Steel Ingot": 2, "Rubber": 2}},
+  "Piston": {time: 10, machine: "Constructor 1", price: 138, inputs: {"Aluminum Ingot": 1, "Cast Iron Ingot": 1}},
+  "V2 Engine Block": {time: 10, machine: "Constructor 1", price: 100, inputs: {"Steel Ingot": 1, "Aluminum Ingot": 1}},
+  "V6 Engine Block": {time: 10, machine: "Constructor 1", price: 263, inputs: {"Steel Ingot": 2, "Cast Iron Ingot": 1}},
+  "V8 Engine Block": {time: 10, machine: "Constructor 1", price: 375, inputs: {"Steel Ingot": 2, "Cast Iron Ingot": 2}},
+  "Vehicle Body": {time: 10, machine: "Constructor 1", price: 200, inputs: {"Steel Ingot": 2, "Aluminum Ingot": 2}},
+  "Battery Pack": {time: 10, machine: "Constructor 1", price: 726, inputs: {"Battery": 3, "Wiring": 1}},
 
-  "CPU": {time: 4, machine: "Constructor 2", price: 176, inputs: {"Copper Ingot": 2, "Gold Ingot": 2, "Glass": 1}},
-  "GPU": {time: 14, machine: "Constructor 2", price: 656, inputs: {"Circuit board": 2, "Gold Ingot": 4, "Copper Ingot": 4}},
-  "HardDrive": {time: 6, machine: "Constructor 2", price: 272, inputs: {"Circuit board": 1, "Aluminum Ingot": 2, "Copper Ingot": 2}},
-  "Electric Motor": {time: 9, machine: "Constructor 2", price: 456, inputs: {"Circuit board": 1, "Wiring": 3, "Iron Ingot": 1}},
-  "Drive Unit": {time: 10, machine: "Constructor 2", price: 2208, inputs: {"Circuit board": 1, "Electric Motor": 1, "Battery Pack": 1}},
-  "V2 Engine": {time: 11, machine: "Constructor 2", price: 536, inputs: {"V2 Engine Block": 1, "Piston": 2, "Wiring": 1}},
-  "V6 Engine": {time: 26, machine: "Constructor 2", price: 1272, inputs: {"V6 Engine Block": 1, "Piston": 6, "Wiring": 1}},
-  "V8 Engine": {time: 35, machine: "Constructor 2", price: 1688, inputs: {"V8 Engine Block": 1, "Piston": 8, "Wiring": 1}},
+  // Constructor 2
+  "CPU": {time: 10, machine: "Constructor 2", price: 125, inputs: {"Copper Ingot": 2, "Gold Ingot": 2, "Glass": 1}},
+  "GPU": {time: 10, machine: "Constructor 2", price: 700, inputs: {"Circuit board": 2, "Gold Ingot": 4, "Copper Ingot": 4}},
+  "HardDrive": {time: 10, machine: "Constructor 2", price: 350, inputs: {"Circuit board": 1, "Aluminum Ingot": 2, "Copper Ingot": 2}},
+  "Electric Motor": {time: 10, machine: "Constructor 2", price: 773, inputs: {"Circuit board": 1, "Wiring": 3, "Iron Ingot": 1}},
+  "Drive Unit": {time: 10, machine: "Constructor 2", price: 3198, inputs: {"Circuit board": 1, "Electric Motor": 1, "Battery Pack": 1}},
+  "V2 Engine": {time: 10, machine: "Constructor 2", price: 1098, inputs: {"V2 Engine Block": 1, "Piston": 2, "Wiring": 1}},
+  "V6 Engine": {time: 10, machine: "Constructor 2", price: 2885, inputs: {"V6 Engine Block": 1, "Piston": 6, "Wiring": 1}},
+  "V8 Engine": {time: 10, machine: "Constructor 2", price: 3855, inputs: {"V8 Engine Block": 1, "Piston": 8, "Wiring": 1}},
+ 
+  // Assembler 1
+  "Headphones": {time: 12.5, machine: "Assembler 1", price: 378, inputs: {"Wiring": 2, "Aluminum Casing S": 1}},
+  "Mouse": {time: 12.5, machine: "Assembler 1", price: 345, inputs: {"Circuit board": 1, "Plastic Casing S": 1}},
+  "Keyboard": {time: 12.5, machine: "Assembler 1", price: 438, inputs: {"Circuit board": 1, "Plastic Casing M": 1}},
+  "Server Rack": {time: 25, machine: "Assembler 1", price: 35250, inputs: {"Server": 4, "Aluminum Frame": 4}},
+  "Oven": {time: 12.5, machine: "Assembler 1", price: 875, inputs: {"Heating Element": 4, "Steel Casing M": 1}},
+  "Dishwasher": {time: 12.5, machine: "Assembler 1", price: 2120, inputs: {"Electric Motor": 1, "Aluminum Casing L": 1}},
+  "Kettle": {time: 12.5, machine: "Assembler 1", price: 250, inputs: {"Heating Element": 1, "Aluminum Casing M": 1}},
 
-  "Headphones": {time:3.5, machine:"Assembler 1", price:360, inputs:{"Wiring":2,"Aluminum Casing S":1}},
-  "Mouse": {time:3, machine:"Assembler 1", price:300, inputs:{"Circuit board":1,"Plastic Casing S":1}},
-  "Keyboard": {time:3.5, machine:"Assembler 1", price:360, inputs:{"Circuit board":1,"Plastic Casing M":1}},
-  "Server Rack": {time:60, machine:"Assembler 1", price:40704, inputs:{"Server":4,"Aluminum Frame":4}},
-  "Oven": {time:7, machine:"Assembler 1", price:672, inputs:{"Heating Element":4,"Steel Casing M":1}},
-  "Dishwasher": {time:10, machine:"Assembler 1", price:1656, inputs:{"Electric Motor":1,"Aluminum Casing L":1}},
-  "Kettle": {time:4.5, machine:"Assembler 1", price:312, inputs:{"Heating Element":1,"Aluminum Casing M":1}},
-  "Speakers": {time:5, machine:"Assembler 2", price:1008, inputs:{"Circuit board":2,"Wiring":2,"Plastic Casing M":1}},
-  "Earbuds": {time:6, machine:"Assembler 2", price:1218, inputs:{"Circuit board":2,"Battery":2,"Plastic Casing S":1}},
-  "Toaster": {time:2.5, machine:"Assembler 2", price:518, inputs:{"Heating Element":1,"Wiring":1,"Aluminum Casing M":1}},
-  "Washing Machine": {time:10, machine:"Assembler 2", price:2212, inputs:{"Electric Motor":1,"Circuit board":1,"Aluminum Casing L":1}},
-  "Blender": {time:8.5, machine:"Assembler 2", price:1960, inputs:{"Electric Motor":1,"Blade":2,"Plastic Casing M":1}},
-  "Microwave": {time:9, machine:"Assembler 2", price:1960, inputs:{"Heating Element":1,"Electric Motor":1,"Aluminum Casing M":1}},
-  "Fridge": {time:4, machine:"Assembler 2", price:784, inputs:{"Cooling Element":1,"Wiring":2,"Steel Casing L":1}},
-  "Desk Fan": {time:10, machine:"Assembler 2", price:2086, inputs:{"Electric Motor":1,"Wiring":1,"Blade":3}},
-  "Power Tools": {time:17, machine:"Assembler 2", price:3542, inputs:{"Electric Motor":2,"Battery":1,"Plastic Casing S":1}},
-  "Smart Watch": {time:3, machine:"Assembler 3", price:1344, inputs:{"Screen":1,"CPU":1,"Battery":1,"Aluminum Casing S":1}},
-  "TV": {time:6.5, machine:"Assembler 3", price:2768, inputs:{"Screen":8,"Circuit board":2,"Wiring":2,"Plastic Casing L":1}},
-  "Server": {time:23, machine:"Assembler 3", price:6720, inputs:{"CPU":1,"Circuit board":4,"HardDrive":4,"Aluminum Casing L":1}},
-  "Crypto Mining Rig": {time:38, machine:"Assembler 3", price:17344, inputs:{"CPU":1,"GPU":6,"Circuit board":2,"Aluminum Frame":1}},
-  "Electric Lawn Mower": {time:7, machine:"Assembler 3", price:3072, inputs:{"Electric Motor":1,"Wiring":2,"Blade":4,"Steel Casing L":1}},
-  "Phone": {time:3, machine:"Assembler 4", price:1872, inputs:{"CPU":1,"Screen":1,"Circuit board":1,"Battery":1,"Aluminum Casing S":1}},
-  "Tablet": {time:4.5, machine:"Assembler 4", price:2952, inputs:{"CPU":1,"Screen":2,"Circuit board":2,"Battery":2,"Aluminum Casing M":1}},
-  "Laptop": {time:6.5, machine:"Assembler 4", price:4104, inputs:{"CPU":1,"Screen":4,"Circuit board":2,"Battery":4,"Aluminum Casing M":1}},
-  "PC": {time:11, machine:"Assembler 4", price:7344, inputs:{"CPU":1,"GPU":1,"Circuit board":2,"HardDrive":2,"Aluminum Casing L":1}},
-  "Console": {time:9.5, machine:"Assembler 4", price:6228, inputs:{"CPU":1,"GPU":1,"Circuit board":3,"HardDrive":1,"Plastic Casing M":1}},
+  // Assembler 2
+  "Speakers": {time: 12.5, machine: "Assembler 2", price: 1203, inputs: {"Circuit board": 2, "Wiring": 2, "Plastic Casing M": 1}},
+  "Earbuds": {time: 12.5, machine: "Assembler 2", price: 1428, inputs: {"Circuit board": 2, "Battery": 2, "Plastic Casing S": 1}},
+  "Toaster": {time: 12.5, machine: "Assembler 2", price: 489, inputs: {"Heating Element": 1, "Wiring": 1, "Aluminum Casing M": 1}},
+  "Washing Machine": {time: 12.5, machine: "Assembler 2", price: 2844, inputs: {"Electric Motor": 1, "Circuit board": 1, "Aluminum Casing L": 1}},
+  "Blender": {time: 12.5, machine: "Assembler 2", price: 2994, inputs: {"Electric Motor": 1, "Blade": 2, "Plastic Casing M": 1}},
+  "Microwave": {time: 12.5, machine: "Assembler 2", price: 2619, inputs: {"Heating Element": 1, "Electric Motor": 1, "Aluminum Casing M": 1}},
+  "Fridge": {time: 12.5, machine: "Assembler 2", price: 1203, inputs: {"Cooling Element": 1, "Wiring": 2, "Steel Casing L": 1}},
+  "Desk Fan": {time: 12.5, machine: "Assembler 2", price: 3183, inputs: {"Electric Motor": 1, "Wiring": 1, "Blade": 3}},
+  "Power Tools": {time: 12.5, machine: "Assembler 2", price: 5052, inputs: {"Electric Motor": 2, "Battery": 1, "Plastic Casing S": 1}},
 
-  "Wheelbarrow": {time: 3, machine: "Vehicle Make 1", price: 592, inputs: {"Wheel M": 1, "Steel Casing M": 1}},
-  "Scooter": {time: 3, machine: "Vehicle Make 1", price: 544, inputs: {"Wheel S": 2, "Steel Casing S": 1}},
-  "Shopping Cart": {time: 5.5, machine: "Vehicle Make 1", price: 1088, inputs: {"Wheel S": 4, "Steel Frame": 1}},
-  "Bicycle": {time: 3.5, machine: "Vehicle Make 2", price: 1476, inputs: {"Wheel M": 2, "Steel Frame": 2, "Steel Chain": 1}},
-  "Electric Scooter": {time: 22, machine: "Vehicle Make 2", price: 10548, inputs: {"Wheel S": 2, "Steel Casing S": 1, "Drive Unit": 1}},
-  "Go-Kart": {time: 23, machine: "Vehicle Make 2", price: 11160, inputs: {"Wheel S": 4, "Steel Casing M": 1, "Drive Unit": 1}},
-  "Motorcycle": {time: 5.5, machine: "Vehicle Make 3", price: 4360, inputs: {"Wheel L": 2, "Steel Casing L": 1, "V2 Engine": 1, "Steel Chain": 1}},
-  "Quad": {time: 7, machine: "Vehicle Make 3", price: 5680, inputs: {"Wheel L": 4, "Steel Casing L": 1, "V2 Engine": 1, "Wiring": 2}},
-  "Golf Cart": {time: 17, machine: "Vehicle Make 3", price: 13700, inputs: {"Wheel M": 4, "Steel Frame": 1, "Drive Unit": 1, "Wiring": 3}},
-  "Car": {time: 7, machine: "Vehicle Make 4", price: 11000, inputs: {"Wheel L": 4, "Vehicle Body": 1, "V6 Engine": 1, "Wiring": 4, "Glass": 2}},
-  "Van": {time: 8, machine: "Vehicle Make 4", price: 12188, inputs: {"Wheel L": 4, "Vehicle Body": 2, "V6 Engine": 1, "Wiring": 6, "Glass": 2}},
-  "Truck": {time: 11, machine: "Vehicle Make 4", price: 16808, inputs: {"Wheel L": 4, "Vehicle Body": 3, "V8 Engine": 1, "Wiring": 8, "Glass": 2}}
+  // Assembler 3
+  "Smart Watch": {time: 12.5, machine: "Assembler 3", price: 1225, inputs: {"Screen": 1, "CPU": 1, "Battery": 1, "Aluminum Casing S": 1}},
+  "TV": {time: 12.5, machine: "Assembler 3", price: 4337, inputs: {"Screen": 8, "Circuit board": 2, "Wiring": 2, "Plastic Casing L": 1}},
+  "Server": {time: 12.5, machine: "Assembler 3", price: 7000, inputs: {"CPU": 1, "Circuit board": 4, "HardDrive": 4, "Aluminum Casing L": 1}},
+  "Crypto Mining Rig": {time: 12.5, machine: "Assembler 3", price: 16013, inputs: {"CPU": 1, "GPU": 6, "Circuit board": 2, "Aluminum Frame": 1}},
+  "Electric Lawn Mower": {time: 12.5, machine: "Assembler 3", price: 4984, inputs: {"Electric Motor": 1, "Wiring": 2, "Blade": 4, "Steel Casing L": 1}},
+
+  // Assembler 4
+  "Phone": {time: 12.5, machine: "Assembler 4", price: 1800, inputs: {"CPU": 1, "Screen": 1, "Circuit board": 1, "Battery": 1, "Aluminum Casing S": 1}},
+  "Tablet": {time: 12.5, machine: "Assembler 4", price: 3100, inputs: {"CPU": 1, "Screen": 2, "Circuit board": 2, "Battery": 2, "Aluminum Casing M": 1}},
+  "Laptop": {time: 12.5, machine: "Assembler 4", price: 4700, inputs: {"CPU": 1, "Screen": 4, "Circuit board": 2, "Battery": 4, "Aluminum Casing M": 1}},
+  "PC": {time: 12.5, machine: "Assembler 4", price: 7200, inputs: {"CPU": 1, "GPU": 1, "Circuit board": 2, "HardDrive": 2, "Aluminum Casing L": 1}},
+  "Console": {time: 12.5, machine: "Assembler 4", price: 6200, inputs: {"CPU": 1, "GPU": 1, "Circuit board": 3, "HardDrive": 1, "Plastic Casing M": 1}},
+
+  // Vehicle Make 1
+  "Wheelbarrow": {time: 15, machine: "Vehicle Make 1", price: 1690, inputs: {"Wheel M": 1, "Steel Casing M": 1}},
+  "Scooter": {time: 15, machine: "Vehicle Make 1", price: 1505, inputs: {"Wheel S": 2, "Steel Casing S": 1}},
+  "Shopping Cart": {time: 15, machine: "Vehicle Make 1", price: 3010, inputs: {"Wheel S": 4, "Steel Frame": 1}},
+
+  // Vehicle Make 2
+  "Bicycle": {time: 15, machine: "Vehicle Make 2", price: 4131, inputs: {"Wheel M": 2, "Steel Frame": 2, "Steel Chain": 1}},
+  "Electric Scooter": {time: 15, machine: "Vehicle Make 2", price: 19245, inputs: {"Wheel S": 2, "Steel Casing S": 1, "Drive Unit": 1}},
+  "Go-Kart": {time: 15, machine: "Vehicle Make 2", price: 20900, inputs: {"Wheel S": 4, "Steel Casing M": 1, "Drive Unit": 1}},
+
+  // Vehicle Make 3
+  "Motorcycle": {time: 15, machine: "Vehicle Make 3", price: 11088, inputs: {"Wheel L": 2, "Steel Casing L": 1, "V2 Engine": 1, "Steel Chain": 1}},
+  "Quad": {time: 15, machine: "Vehicle Make 3", price: 13716, inputs: {"Wheel L": 4, "Steel Casing L": 1, "V2 Engine": 1, "Wiring": 2}},
+  "Golf Cart": {time: 15, machine: "Vehicle Make 3", price: 24978, inputs: {"Wheel M": 4, "Steel Frame": 1, "Drive Unit": 1, "Wiring": 3}},
+
+  // Vehicle Make 4
+  "Car": {time: 15, machine: "Vehicle Make 4", price: 28917, inputs: {"Wheel L": 4, "Vehicle Body": 1, "V6 Engine": 1, "Wiring": 4, "Glass": 2}},
+  "Van": {time: 15, machine: "Vehicle Make 4", price: 30758, inputs: {"Wheel L": 4, "Vehicle Body": 2, "V6 Engine": 1, "Wiring": 6, "Glass": 2}},
+  "Truck": {time: 15, machine: "Vehicle Make 4", price: 42539, inputs: {"Wheel L": 4, "Vehicle Body": 3, "V8 Engine": 1, "Wiring": 8, "Glass": 2}}
 };
 
 
@@ -305,14 +328,14 @@ svg.append("defs").append("marker")
 
 
 
-const mults = {5:5.0625,4:3.375,3:2.25,2:1.5,1:1};
+const mults = {5:5,4:4,3:3,2:2,1:1};
 
 const lvlMultipliers = {
   1: 1,
-  2: 1.5,
-  3: 2.25,
-  4: 3.375,
-  5: 5.0625
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5
 };
 
 
@@ -333,10 +356,10 @@ function renderGraph() {
 
   const lvlMultipliers = {
    1: 1,
-   2: 1.5,
-   3: 2.25,
-   4: 3.375,
-   5: 5.0625
+   2: 2,
+   3: 3,
+   4: 4,
+   5: 5
   };
   const speedMultiplier = lvlMultipliers[lvl];
 
